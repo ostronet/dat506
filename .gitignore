@@ -1,0 +1,8 @@
+
+#Här står alla typer av filer och filextensions som github inte ska säkerhetskopiera och logga!
+
+__pycache__/
+*.pyc
+venv/
+.env
+*.log
