@@ -1,7 +1,5 @@
 
 
-text = ["detta, är en sträng", 'dett är en annan']
-
 def tokenize(text):
     fixed_words = []
     for line in text:
