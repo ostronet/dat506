@@ -3,21 +3,21 @@
 def tokenize(text):
     fixed_words = []
     for line in text:
-        line = line + " "
+        line = line + " "   #Failsafe
         start = 0
         end = 0
         while start < len(line) and end < len(line):
 
             
             if line[end].isspace() == False:
-                if line[end].isdigit() == True:
-                    while line[end].isdigit() == True:
+                if line[end].isdigit():
+                    while line[end].isdigit():
                         end += 1
                     fixed_words.append(line[start:end])
                     start = end
 
-                if line[end].isalpha() == True:
-                    while line[end].isalpha() == True:
+                if line[end].isalpha():
+                    while line[end].isalpha():
                         end += 1
                     fixed_words.append(line[start:end].lower())
                     start = end
@@ -29,8 +29,6 @@ def tokenize(text):
                 end += 1
                 start = end
 
-        if end > start and line[end].isalpha() is True:
-            fixed_words.append(line[start:end])
 
     return(fixed_words)
 
