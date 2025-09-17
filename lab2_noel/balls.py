@@ -55,13 +55,10 @@ def show(half_size,count):
     plt.show()
     
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python balls.py <half_size> <N>")
-        sys.exit(1)
 
     half_size = float(sys.argv[1])   
-    N = int(sys.argv[2]) 
-    show(half_size,N)            
+    N = int(sys.argv[2])   
+    show(half_size, N)         
 
 			
 	
