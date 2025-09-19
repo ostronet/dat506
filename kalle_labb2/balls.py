@@ -11,17 +11,15 @@ def trajectory(x,y,dx,dy,halfsize,mass=None):
         x += dx
         y += dy
         yield x,y
+    
         if x >= halfsize or x <= -halfsize: 
             dx = -dx
-        if y >= halfsize or y <= -halfsize+10:
-            dy = -dy * 0.99
+        if y >= halfsize or y <= -halfsize:
+            dy = -dy
     
-        if y > -halfsize+10:
-            dy = dy + 0.92
-
 def prep_trajectories(halfsize,N):
 
-    speed = 3
+    speed = 1
     
     trajs = []
     for n in range(N):
