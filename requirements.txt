@@ -1,5 +1,1 @@
-random
-matplotlib.pyplot
-os
-sys
-time
+matplotlib

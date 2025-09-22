@@ -1,9 +1,6 @@
 import sys
-                #1 = x^2 + y^2
-def f(x,y):
-    ans = x**2 + y**2 - 5**2
-    return ans
 
+                #1 = x^2 + y^2
 
 def cells(x1,y1,x2,y2,gridsize):        #x1 är lägsta x, längst till vänster, y1 är högsta y, längst upp
     xc1 = x1
@@ -117,12 +114,12 @@ def segments(x1,y1,x2,y2,gridsize,f):
             d = kord2[1]
             
             yield (a,b,c,d)
-            
+
 
 
 def show(x1,y1,x2,y2,gridsize,f):
     import matplotlib.pyplot as plt
-
+    
     fig, ax = plt.subplots()
     ax.set_aspect('equal')
 
@@ -130,15 +127,37 @@ def show(x1,y1,x2,y2,gridsize,f):
         plt.plot([x1, x2], [y1, y2], color="red")
     plt.show()
 
+
+
+def circle(x,y):
+    return x**2 + y**2  - 5**2
+
+def line(x,y):
+    return x+y
+
+def cardioid(x,y):
+    return (x**2+y**2)**2 + 4*10*x*(x**2+y**2) - 4*10**2*y**2
+
+def lemniscate(x,y):
+    return (x**2 +y**2)**2 - 40**2*(x**2-y**2)
+
+str_to_func = {
+    "line":line,
+    "circle":circle,
+    "cardioid":cardioid,
+    "lemniscate":lemniscate
+}
+
+
+def main(): 
+    show(-100,100,100,-100,1,str_to_func[sys.argv[1]])
+    
+
 if "--help" in sys.argv:
     print("x1,y1,x2,y2,gridsize,(f)") 
+
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
 
-
-
-#vi har koordinater (xin1,yin1) och (xin2,yin2) ska interpolera mellan dessa. 
-
-    
-        
