@@ -5,12 +5,12 @@ import sys
 
 
 
-def trajectory(x,y,dx,dy,halfsize,mass=None):
-    yield x,y
+def trajectory(x,y,dx,dy,mass,halfsize):
+    yield x,y,mass
     while True:
         x += dx
         y += dy
-        yield x,y
+        yield x,y,mass
     
         if x >= halfsize or x <= -halfsize: 
             dx = -dx
@@ -19,11 +19,11 @@ def trajectory(x,y,dx,dy,halfsize,mass=None):
     
 def prep_trajectories(halfsize,N):
 
-    speed = 1
-    
+    speed = 0.5
+    mass = 1
     trajs = []
     for n in range(N):
-        trajs.append(trajectory(rm.random()*10, rm.random()*10, rm.random()*speed, rm.random()*speed, halfsize))
+        trajs.append(trajectory(rm.random()*10, rm.random()*10, rm.random()*speed, rm.random()*speed,mass, halfsize))
                                 #x          y                      dx          dy
 
     return trajs

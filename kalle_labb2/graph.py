@@ -150,7 +150,10 @@ str_to_func = {
 
 
 def main(): 
-    show(-100,100,100,-100,1,str_to_func[sys.argv[1]])
+    if sys.argv[1] in str_to_func:
+        show(-100,100,100,-100,1,str_to_func[sys.argv[1]])
+    else:
+        show(-100,100,100,-100,1,lambda x,y:eval(sys.argv[1]))
     
 
 if "--help" in sys.argv:
