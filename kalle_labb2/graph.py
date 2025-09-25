@@ -89,31 +89,31 @@ def segments(x1,y1,x2,y2,gridsize,f):
         fall = get_case(f,c) 
         
         if fall != 0 and fall != 15: 
-            #for tuples in table[fall]:                      #Få ett fall
-            koordPos = table[fall][0] 
-                         #Kolla upp vilka hörn från table
-            
-            xin1 = c[koordPos[0]]
-            yin1 = c[koordPos[1]]
+            for Tuple in table[fall]: 
+                               #Få ett fall
+                             #Kolla upp vilka hörn från table
+           
+                xin1 = c[Tuple[0]]
+                yin1 = c[Tuple[1]]
 
-            xin2 = c[koordPos[2]]
-            yin2 = c[koordPos[3]]
+                xin2 = c[Tuple[2]]
+                yin2 = c[Tuple[3]]
 
-            xin3 = c[koordPos[4]]
-            yin3 = c[koordPos[5]]
+                xin3 = c[Tuple[4]]
+                yin3 = c[Tuple[5]]
 
-            xin4 = c[koordPos[6]]
-            yin4 = c[koordPos[7]]
+                xin4 = c[Tuple[6]]
+                yin4 = c[Tuple[7]]
+                
+                kord1 = interpolate(xin1,yin1,xin2,yin2,f)
+                kord2 = interpolate(xin3,yin3,xin4,yin4,f)
+                
+                a = kord1[0]
+                b = kord1[1]
+                ce = kord2[0]
+                d = kord2[1]
             
-            kord1 = interpolate(xin1,yin1,xin2,yin2,f)
-            kord2 = interpolate(xin3,yin3,xin4,yin4,f)
-            
-            a = kord1[0]
-            b = kord1[1]
-            c = kord2[0]
-            d = kord2[1]
-            
-            yield (a,b,c,d)
+                yield (a,b,ce,d)
 
 
 

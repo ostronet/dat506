@@ -19,8 +19,8 @@ def trajectory(x,y,dx,dy,mass,halfsize):
     
 def prep_trajectories(halfsize,N):
 
-    speed = 0.5
-    mass = 1
+    speed = 1
+    mass = 15
     trajs = []
     for n in range(N):
         trajs.append(trajectory(rm.random()*10, rm.random()*10, rm.random()*speed, rm.random()*speed,mass, halfsize))
