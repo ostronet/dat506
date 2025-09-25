@@ -80,11 +80,11 @@ def show_w_gif(half_size,gridsize,count,file_name,frame_count):
 
 
 def main():
-    if "animation.gif" in sys.argv:
+    try:
         show_w_gif(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],int(sys.argv[5]))
         
         
-    else:   
+    except:   
         show(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]))
 
 
