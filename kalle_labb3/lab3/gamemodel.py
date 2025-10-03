@@ -10,7 +10,7 @@ class Game:
         self.players = [Player("0",self,"blue",position=-90,firingDir="right"), Player("1",self,"red",position=90,firingDir="left")]
         self.cannonSize = cannonSize
         self.ballSize = ballSize
-        self.wind = 0
+        self.wind = random.random()* 20 - 10
         self.current_player = 0
         
     """ A list containing both players """
@@ -51,7 +51,6 @@ class Game:
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
-        self.nextPlayer()
         self.setCurrentWind(random.random() * 20 - 10)
         #HINT: random.random() gives a random value between 0 and 1
         # multiplying this by 20 gives a random value between 0 and 20
@@ -69,6 +68,8 @@ class Player:
         self.score = 0
         self.position = position
         self.firingDir = firingDir
+        self.angle = 45
+        self.velocity = 40
         
             
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
@@ -88,8 +89,8 @@ class Player:
         else:
             launch_angle = 180 - self.angle
         
-        xLower = -100
-        xUpper = 100
+        xLower = -110
+        xUpper = 110
         proj = Projectile(launch_angle, velocity, wind, xPos,yPos,xLower,xUpper )
         return proj
 
@@ -103,11 +104,11 @@ class Player:
         offset = self.game.cannonSize/2 + self.game.ballSize
         
         if res > 0:
-            res -= offset   
-        if res < 0:
-            res += offset
+            res -= offset/2   
+        if res <= 0:
+            res += offset/2
 
-        gap = abs(res) - offset
+        gap = abs(res) - offset/2
         if gap <= 0:
             return 0
         else: return -res

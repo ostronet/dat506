@@ -9,28 +9,40 @@ class GameGraphics:
         # open the window
         self.win = GraphWin("Cannon game" , 640, 480, autoflush=False)
         self.win.setCoords(-110, -10, 110, 155)
-        
-        # draw the terrain
-        # TODO: Draw a line from (-110,0) to (110,0)
 
-        self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)]
-        self.draw_scores  = [self.drawScore(0), self.drawScore(1)]
+        #drawing the line
+        p1 = Point(-110,0)
+        p2 = Point(110,0)
+        l12 = Line(p1,p2)
+        l12.setFill("black")
+        l12.draw(self.win)
+
+        
+        self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)] #Dessa drawCanon och drawScore är endast använda en gång i början! Sedan kör man de
+        self.draw_scores  = [self.drawScore(0), self.drawScore(1)] #genom update score.
         self.draw_projs   = [None, None]
 
     def drawCanon(self,playerNr):
-        # draw the cannon
-        # TODO: draw a square with the size of the cannon with the color
-        # and the position of the player with number playerNr.
-        # After the drawing, return the rectangle object.
-        return None
+        #drawing the cannons
+        playr = self.game.players[playerNr]
+        col = playr.getColor()
+        p1 = Point(playr.getX() - self.game.cannonSize / 2, 0)
+        p2 = Point(playr.getX() + self.game.cannonSize/ 2, self.game.cannonSize)
+        rec12 = Rectangle(p1,p2)
+
+        rec12.setFill(col); rec12.draw(self.win)
+        
+        return rec12
 
     def drawScore(self,playerNr):
         # draw the score
-        # TODO: draw the text "Score: X", where X is the number of points
-        # for player number playerNr. The text should be placed under
-        # the corresponding cannon. After the drawing,
-        # return the text object.
-        return None
+        playr = self.game.players[playerNr]
+        
+        tp = Point(playr.getX(), -5)
+        text = Text(tp,str(playr.getScore()))
+        text.draw(self.win)
+        
+        return text
 
     def fire(self, angle, vel):
         player = self.game.getCurrentPlayer()
@@ -39,12 +51,18 @@ class GameGraphics:
         circle_X = proj.getX()
         circle_Y = proj.getY()
 
-        # TODO: If the circle for the projectile for the current player
-        # is not None, undraw it!
+        
+        if self.draw_projs[self.game.current_player] is not None:
+            self.draw_projs[self.game.current_player].undraw()
 
         # draw the projectile (ball/circle)
-        # TODO: Create and draw a new circle with the coordinates of
-        # the projectile.
+        p = Point(circle_X, circle_Y)
+        circle = Circle(p,self.game.ballSize)
+        self.draw_projs[self.game.current_player] = circle 
+        circle.setFill(str(player.color))      #sparar projektilen i listan av projektiler
+        circle.draw(self.win)
+        
+        
 
         while proj.isMoving():
             proj.update(1/50)
@@ -60,9 +78,9 @@ class GameGraphics:
         return proj
 
     def updateScore(self,playerNr):
-        # update the score on the screen
-        # TODO: undraw the old text, create and draw a new text
-        pass
+    
+        self.draw_scores[playerNr].undraw()
+        self.draw_scores[playerNr] = self.drawScore(playerNr)
 
     def play(self):
         while True:
@@ -87,11 +105,22 @@ class GameGraphics:
             if distance == 0.0:
                 player.increaseScore()
                 self.updateScore(self.game.getCurrentPlayerNumber())
+                self.explode(self.game.getOtherPlayer())
                 self.game.newRound()
 
             self.game.nextPlayer()
 
-
+    def explode(self,otherPlayer):
+        explosion_radius = 0.1
+        while explosion_radius < 2 * self.game.cannonSize:
+            p = Point(otherPlayer.getX(),self.game.cannonSize/2)
+            explosion = Circle(p,explosion_radius); explosion.setFill(self.game.getCurrentPlayer().getColor())
+            explosion.draw(self.win)
+            update(50)
+            explosion_radius += 0.1
+            explosion.undraw()
+            
+#vinden uppdaterar bara när man träffar och det är alltid blå som börjar efter att vinden uppdateras
 class InputDialog:
     def __init__ (self, angle, vel, wind):
         self.win = win = GraphWin("Fire", 200, 300)
@@ -166,4 +195,4 @@ class Button:
         self.active = 0
 
 
-GameGraphics(Game(11,3)).play()
+GameGraphics(Game(11,2)).play()
